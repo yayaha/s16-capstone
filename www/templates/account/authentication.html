@@ -1,0 +1,23 @@
+<ion-view view-title="Login">
+  <ion-content>
+    <!--<div ng-show="authCtrl.error">-->
+      <!--<span>{{ authCtrl.error.message }}</span>-->
+    <!--</div>-->
+
+    <form>
+      <div class="list">
+      <label class="item item-input">
+        <input type="email" placeholder="Email Address" ng-model="authCtrl.user.email">
+      </label>
+      <label class="item item-input">
+        <input type="password" placeholder="Password" ng-model="authCtrl.user.password">
+      </label>
+      <br>
+      <br>
+      <input type="submit" class="button button-block button-assertive" value="Log In" ng-click="authCtrl.login('tab.account-dash')">
+      <input type="submit" class="button button-block button-outline button-assertive" value="Register" ng-click="authCtrl.register()">
+      </div>
+    </form>
+  </ion-content>
+
+</ion-view>
