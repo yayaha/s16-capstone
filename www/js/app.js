@@ -27,20 +27,51 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
     $ionicConfigProvider.tabs.position('bottom');
 
     $stateProvider
+
       .state('tab', {
         url: '/tab',
         abstract: true,
         templateUrl: 'templates/tabs.html'
       })
-      .state('tab.home', {
-        url: '/home',
+
+      .state('tab.departments', {
+        url: '/departments',
+        resolve: {
+          departments: function(Shop) {
+            return Shop.all().$loaded();
+          }
+        },
         views: {
           'tab-home': {
-            templateUrl: 'templates/shop/home.html',
-            controller: ''
+            templateUrl: 'templates/shop/departments.html',
+            controller: 'DepartmentsCtrl as departmentsCtrl'
           }
         }
       })
+
+      .state('tab.product-list', {
+        url: '/product-list/:departmentId',
+        views: {
+          'tab-home': {
+            templateUrl: 'templates/shop/product-list.html',
+            controller: 'ProductListCtrl as productListCtrl'
+          }
+        },
+        resolve: {
+          departmentName: function($stateParams, Shop) {
+            console.log('department ' + $stateParams.departmentId);
+            // If accessed directly (which happens only when debugging), the program must retrieve department list first.
+            //return Shop.all().$loaded().then(function(){
+            return Shop.getDepartment($stateParams.departmentId).$value;
+            //});
+          },
+          productList: function($stateParams, Shop) {
+            return Shop.getProductList($stateParams.departmentId).$loaded();
+          }
+        }
+      })
+
+
       .state('tab.cart', {
         url: '/cart',
         views: {
@@ -107,7 +138,7 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
           }
         }
       });
-    $urlRouterProvider.otherwise('/tab/home');
+    $urlRouterProvider.otherwise('/tab/departments');
   })
   .constant('FirebaseUrl', 'https://cmu-emirates.firebaseio.com/');
 

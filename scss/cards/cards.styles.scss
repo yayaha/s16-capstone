@@ -1,0 +1,80 @@
+.bar-header
+{
+	background-color: $header-bg;
+	color: $header-color;
+}
+
+.cards-view
+{
+	background-color: $cards-list-bg;
+
+	.cards-5-outer
+	{
+		flex-wrap: wrap;
+		padding: $card-5-outer-padding;
+
+		.card-5
+		{
+			padding: 0px;
+			margin-bottom: $card-5-outer-padding;
+
+			&:nth-child(odd)
+			{
+				padding-right: ($card-5-outer-padding / 2);
+			}
+
+			&:nth-child(even)
+			{
+				padding-left: ($card-5-outer-padding / 2);
+			}
+
+			.card
+			{
+				margin: 0px;
+				border-radius: 4px;
+				box-shadow: 0px 1px 1px rgba(lighten($card-5-color, 40%), .3);
+
+				.item
+				{
+					&.item-body
+					{
+						padding: $card-5-padding;
+					}
+
+					&:first-child
+					{
+						border-top-left-radius: 4px;
+  					border-top-right-radius: 4px;
+					}
+
+					&:last-child
+					{
+						border-bottom-left-radius: 4px;
+  					border-bottom-right-radius: 4px;
+					}
+				}
+			}
+
+			.card-title
+			{
+				margin: 0px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+				font-size: 14px;
+				font-weight: 500;
+				color: lighten($card-5-color, 25%);
+			}
+
+			.card-description
+			{
+				color: lighten($card-5-color, 45%);
+				font-size: 12px;
+				margin: 2px 0px 0px;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+	}
+}

@@ -1,0 +1,37 @@
+{
+  "departments" : [ null, "Clothing", "Shoes", "Bags", "Accessories", "Beauty", "Electronics" ],
+  "products" : {
+    "6" : [ null, {
+      "condition" : "New",
+      "description" : "Combine incredible water resistance with a great screen and a powerful processor, and you get the Samsung Galaxy S7. It's built to withstand dunks in water for up to 30 minutes, and then you can wipe it off and get playing with a 5.1-inch touchscreen. The Samsung Galaxy S7 enjoys a quad-core processor for ultra-fast responsiveness.",
+      "inventory" : 15,
+      "name" : "Samsung - Galaxy S7 32GB - Gold Platinum (AT&T)",
+      "pictures" : [ "img/s7-1.jpg", "img/s7-1.jpg", "img/s7-2.jpg", "img/s7-3.jpg" ],
+      "price" : 100000,
+      "publisher" : "16d57c5e-48da-4636-bb7f-3ed9d50eba91",
+      "sku" : 4897705
+    } ]
+  },
+  "users" : {
+    "16d57c5e-48da-4636-bb7f-3ed9d50eba91" : {
+      "addr" : {
+        "city" : "Pittsburgh",
+        "country" : "US",
+        "l1" : "5813 Hobart Street",
+        "state" : "PA",
+        "zipcode" : 15217
+      },
+      "balance" : {
+        "available" : 1000000,
+        "pending" : 0
+      },
+      "displayName" : "yayaha",
+      "dob" : "1992-04-16",
+      "email" : "1@1.com",
+      "emailHash" : "d219af79b45e5891507fda4c4c2139a0",
+      "gender" : "Male",
+      "gravatar" : "http://www.gravatar.com/avatar/d219af79b45e5891507fda4c4c2139a0",
+      "number" : 122451
+    }
+  }
+}

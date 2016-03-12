@@ -19,7 +19,6 @@
     "commit": "4675ea9650a26d4a786e668ba2ed937a7a0eeb3c"
   },
   "_source": "git://github.com/raibutera/robotodraft.git",
-  "_target": "^1.1.0",
-  "_originalSource": "robotodraft",
-  "_direct": true
+  "_target": "1.1.0",
+  "_originalSource": "robotodraft"
 }

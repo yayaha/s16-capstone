@@ -1,0 +1,10 @@
+<ion-view view-title="Departments">
+  <ion-content>
+    <div class="list card">
+      <a class="item" ng-repeat="department in departmentsCtrl.departments"
+         ui-sref="tab.product-list({departmentId: department.$id})" style="text-align: center;">
+        {{ department.$value }}
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

@@ -9,7 +9,7 @@ angular.module('emiratesApp')
     profileCtrl.profile = profile;
     profileCtrl.profile.email = auth.password.email;
     profileCtrl.profile.emailHash = md5.createHash(auth.password.email);
-    profileCtrl.profile.gravatar = 'http://www.gravatar.com/avatar/' + profileCtrl.profile.emailHash;
+    profileCtrl.profile.gravatar = 'http://www.gravatar.com/avatar/' + profileCtrl.profile.emailHash + '?s=400';
     profileCtrl.profile.balance = {
       'available': 1000000,
       'pending': 0

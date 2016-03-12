@@ -1,0 +1,12 @@
+$header-bg: #3f51b5;
+$header-color: #FFF;
+$cards-list-bg: #ededed;
+
+$card-5-color: #222222;
+$card-5-bg: #FFFFFF;
+$card-5-padding: 10px;
+$card-5-outer-padding: 16px;
+$card-5-main-image-ratio: 1 1;
+
+// Merge maps
+$pre-img-ratios: append($pre-img-ratios, $card-5-main-image-ratio);
