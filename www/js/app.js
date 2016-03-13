@@ -72,6 +72,21 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
       })
 
 
+      .state('tab.product-detail', {
+        url: '/product/:productId',
+        views: {
+          'tab-home': {
+            templateUrl: 'templates/shop/product-detail.html',
+            controller: 'ProductCtrl as productCtrl'
+          }
+        },
+        resolve: {
+          product: function($stateParams, Shop) {
+            return Shop.getProductWithinDepartment($stateParams.productId);
+          }
+        }
+      })
+
       .state('tab.cart', {
         url: '/cart',
         views: {

@@ -9,14 +9,20 @@ angular.module('emiratesApp')
     var productListRef = new Firebase(FirebaseUrl + 'products');
     var departments = $firebaseArray(departmentsRef);
 
+    var products;
 
     return {
       getProductList: function(departmentId) {
-        return $firebaseArray(productListRef.child(departmentId));
+        products = $firebaseArray(productListRef.child(departmentId));
+        return products;
       },
 
       getDepartment: function(departmentId) {
         return departments[departmentId];
+      },
+
+      getProductWithinDepartment: function(productId) {
+        return products[productId];
       },
 
       all: function() {

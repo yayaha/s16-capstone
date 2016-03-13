@@ -1,0 +1,46 @@
+<ion-view view-title="{{ productCtrl.product.name }}">
+  <ion-content>
+
+    <div class="item">
+      <ion-slide-box on-slide-changed="slideHasChanged($index)">
+        <ion-slide ng-repeat="pic in productCtrl.productPictures">
+          <img ng-src="{{ pic }}" style="width: 100%">
+        </ion-slide>
+      </ion-slide-box>
+    </div>
+    <div class="item item-text-wrap">
+      <h2 style="font-family: 'Arial Black'">{{ productCtrl.product.name }}</h2>
+      <div style="color: #8f8f8f">Item SKU: {{ productCtrl.product.sku }}</div>
+      <br>
+      <div class="row">
+        <div class="col col-60">
+          <div style="font-size: 18px; color: #ef473a">
+            <b>{{ productCtrl.product.price | currency : '' : 0 }}</b> miles
+          </div>
+          <div>Condition: {{ productCtrl.product.condition }}</div>
+        </div>
+        <label class="item-input item-select col col-40">
+          <span class="input-label">Qty: </span>
+          <select>
+            <option ng-repeat="i in productCtrl.getNumber(productCtrl.product.inventory - 1) track by $index">{{ $index
+              +
+              1 }}
+            </option>
+          </select>
+        </label>
+      </div>
+      <div style="text-align: right">
+        <button class="button button-outline button-assertive">Buy it now</button>
+        &nbsp;
+        <button class="button button-assertive">Add to cart</button>
+      </div>
+    </div>
+
+    <div class="item item-text-wrap">
+      <h2>Product Details</h2>
+      <div ng-bind-html="productCtrl.product.description"></div>
+    </div>
+
+    <p></p>
+  </ion-content>
+</ion-view>

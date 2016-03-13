@@ -2,7 +2,7 @@
   <ion-content>
 
     <div class="row cards-5-outer">
-      <div class="col col-50 card-5" ng-repeat="product in productListCtrl.productList">
+      <div class="col col-50 card-5" ng-repeat="product in productListCtrl.productList" ui-sref="tab.product-detail({productId: product.$id})">
         <div class="list card">
           <div class="item item-image">
             <pre-img ratio="_1_1" helper-class="main-image" ng-hide="product.pictures">
