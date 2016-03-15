@@ -96,16 +96,43 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
           }
         },
         resolve: {
-          auth: function($state, Auth) {
-            return Auth.auth.$requireAuth().then(function(auth) {
-              return auth;
-            }, function(error) {
-              $state.go('tab.login');
-            })
-          },
-          cart: function(auth, Cart) {
-            return Cart.cart(auth.uid).$loaded();
+          auth: function($state, $ionicPopup, Auth) {
+            var authData = Auth.auth.$getAuth();
+            if (authData) {
+              return authData;
+              //return {
+              //  auth: authData,
+              //  cart: Shop.cart(data.uid).$loaded().then(function (x) {
+              //    return x;
+              //  })
+              //};
+            } else {
+              $ionicPopup.alert({
+                title: "Login Required",
+                template: "You must log in to view your cart",
+                okType: "button-assertive"
+              }).then(function () {
+                $state.go('tab.login');
+              });
+            }
           }
+
+          //auth: function($state, $ionicPopup, Auth) {
+          //  return Auth.auth.$requireAuth().then(function(auth) {
+          //    return auth;
+          //  }, function() {
+          //    $ionicPopup.alert({
+          //      title: "Login Required",
+          //      template: "You must log in to view your cart",
+          //      okType: "button-assertive"
+          //    }).then(function() {
+          //      $state.go('tab.login');
+          //    })
+          //  })
+          //},
+          //cart: function(auth, Cart) {
+          //  return Cart.cart(auth.uid).$loaded();
+          //}
         }
       })
 

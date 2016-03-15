@@ -3,14 +3,25 @@
  */
 
 angular.module('emiratesApp')
-  .controller('CartCtrl', function(auth, cart, Cart) {
+  .controller('CartCtrl', function(auth, Cart, Auth) {
     var cartCtrl = this;
 
-    cartCtrl.cart = cart;
-
-    cartCtrl.removeProduct = function(cartProductId) {
-      Cart.removeProduct(auth.uid, cartProductId);
+    if (!auth) {
+      return;
     }
 
+    Auth.auth.$onAuth(function(authData) {
+      if (authData) {
+        Cart.cart(authData.uid).$loaded().then(function(data) {
+          cartCtrl.cart = data;
+        })
+      } else {
+        cartCtrl.cart = [];
+      }
+    });
+
+    cartCtrl.removeProduct = function(cartProductId) {
+      Cart.removeProduct(authAndProduct.auth.uid, cartProductId);
+    };
 
   });
