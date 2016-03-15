@@ -38,7 +38,7 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         url: '/departments',
         resolve: {
           departments: function(Shop) {
-            return Shop.all().$loaded();
+            return Shop.all();
           }
         },
         views: {
@@ -66,14 +66,14 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
             //});
           },
           productList: function($stateParams, Shop) {
-            return Shop.getProductList($stateParams.departmentId).$loaded();
+            return Shop.getProductList($stateParams.departmentId);
           }
         }
       })
 
 
       .state('tab.product-detail', {
-        url: '/product/:productId',
+        url: '/product/:departmentId/:productId',
         views: {
           'tab-home': {
             templateUrl: 'templates/shop/product-detail.html',
@@ -82,7 +82,7 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         },
         resolve: {
           product: function($stateParams, Shop) {
-            return Shop.getProductWithinDepartment($stateParams.productId);
+            return Shop.getProduct($stateParams.departmentId, $stateParams.productId);
           }
         }
       })
@@ -92,7 +92,19 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         views: {
           'tab-cart': {
             templateUrl: 'templates/cart/cart.html',
-            controller: ''
+            controller: 'CartCtrl as cartCtrl'
+          }
+        },
+        resolve: {
+          auth: function($state, Auth) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return auth;
+            }, function(error) {
+              $state.go('tab.login');
+            })
+          },
+          cart: function(auth, Cart) {
+            return Cart.cart(auth.uid).$loaded();
           }
         }
       })
@@ -107,12 +119,12 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         },
         resolve: {
           auth: function($state, Auth) {
-            return Auth.$requireAuth().catch(function(){
+            return Auth.auth.$requireAuth().catch(function(){
               $state.go('tab.login');
             });
           },
           profile: function(Auth, Profile) {
-            return Auth.$requireAuth().then(function(auth) {
+            return Auth.auth.$requireAuth().then(function(auth) {
               return Profile.getProfile(auth.uid).$loaded();
             });
           }
@@ -130,14 +142,14 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         resolve: {
           auth: function($state, Auth) {
             console.log('auth');
-            return Auth.$requireAuth().catch(function(error){
+            return Auth.auth.$requireAuth().catch(function(error){
               $state.go('tab.login');
               console.log(error);
             });
           },
           profile: function(Auth, Profile) {
             console.log('profile');
-            return Auth.$requireAuth().then(function(auth) {
+            return Auth.auth.$requireAuth().then(function(auth) {
               return Profile.getProfile(auth.uid).$loaded();
             });
           }
@@ -151,9 +163,17 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
             templateUrl: 'templates/account/authentication.html',
             controller: 'AuthCtrl as authCtrl'
           }
+        },
+        resolve: {
+          unauth: function($state, Auth) {
+            return Auth.auth.$requireAuth().then(function(){
+              $state.go('tab.account-dash');
+            }, function(){
+
+            })
+          }
         }
       });
     $urlRouterProvider.otherwise('/tab/departments');
   })
   .constant('FirebaseUrl', 'https://cmu-emirates.firebaseio.com/');
-

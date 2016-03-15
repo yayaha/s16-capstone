@@ -4,7 +4,7 @@
 
 angular
   .module('emiratesApp')
-  .controller('AuthCtrl', function(Auth, $state, $ionicPopup) {
+  .controller('AuthCtrl', function (Auth, $state, $ionicPopup) {
     var authCtrl = this;
 
     authCtrl.user = {
@@ -12,26 +12,27 @@ angular
       password: ''
     };
 
-    authCtrl.login = function(nextPage) {
-      Auth.$authWithPassword(authCtrl.user).then(function(auth) {
-        console.log('Login successful!');
-        $state.go(nextPage);
-      }, function(error) {
+    authCtrl.login = function (nextPage) {
+      Auth.login(authCtrl.user, nextPage).then(function () {
+        authCtrl.user = {
+          email: '',
+          password: ''
+        }
+      }, function (error) {
         authCtrl.showAlert('Error', error.message);
-      });
+      })
     };
 
-    authCtrl.register = function() {
-      Auth.$createUser(authCtrl.user)
-        .then(function(user) {
-          authCtrl.showAlert('Register successful!', 'Your account was created!');
-          authCtrl.login('tab.edit-profile');
-        }, function(error) {
-          authCtrl.showAlert('Error', error.message);
-        })
+    authCtrl.register = function () {
+      Auth.register(authCtrl.user).then(function () {
+        authCtrl.showAlert('Register successful!', 'Your account was created!');
+        this.login('tab.edit-profile');
+      }, function (error) {
+        authCtrl.showAlert('Error', error.message);
+      })
     };
 
-    authCtrl.showAlert = function(title, msg) {
+    authCtrl.showAlert = function (title, msg) {
       $ionicPopup.alert({
         title: title,
         template: msg,

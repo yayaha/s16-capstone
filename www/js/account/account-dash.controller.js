@@ -8,7 +8,6 @@ angular.module('emiratesApp')
     acctCtrl.profile = profile;
 
     acctCtrl.logout = function() {
-      Auth.$unauth();
-      $state.go('tab.home');
+      Auth.logout();
     }
   });

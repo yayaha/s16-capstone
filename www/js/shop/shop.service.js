@@ -18,11 +18,21 @@ angular.module('emiratesApp')
       },
 
       getDepartment: function(departmentId) {
-        return departments[departmentId];
+        return departments.$loaded().then(function(x){
+          return x.$getRecord(departmentId);
+        });
       },
 
       getProductWithinDepartment: function(productId) {
-        return products[productId];
+        return products.$loaded().then(function(x) {
+          return x.$getRecord(productId)
+        });
+      },
+
+      getProduct: function(departmentId, productId) {
+        return $firebaseArray(productListRef.child(departmentId)).$loaded().then(function(x){
+          return x.$getRecord(productId);
+        })
       },
 
       all: function() {

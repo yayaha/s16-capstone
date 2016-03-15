@@ -21,18 +21,15 @@
         </div>
         <label class="item-input item-select col col-40">
           <span class="input-label">Qty: </span>
-          <select>
-            <option ng-repeat="i in productCtrl.getNumber(productCtrl.product.inventory - 1) track by $index">{{ $index
-              +
-              1 }}
-            </option>
+          <select ng-model="productCtrl.quantity" ng-init="productCtrl.quantity=productCtrl.options[0]"
+                  ng-options="i for i in productCtrl.options">
           </select>
         </label>
       </div>
       <div style="text-align: right">
-        <button class="button button-outline button-assertive">Buy it now</button>
+        <button class="button button-outline button-assertive" ng-click="productCtrl.buyItNow()">Buy it now</button>
         &nbsp;
-        <button class="button button-assertive">Add to cart</button>
+        <button class="button button-assertive" ng-click="productCtrl.addToCart()">Add to cart</button>
       </div>
     </div>
 
