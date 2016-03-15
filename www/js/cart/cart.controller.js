@@ -21,7 +21,7 @@ angular.module('emiratesApp')
     });
 
     cartCtrl.removeProduct = function(cartProductId) {
-      Cart.removeProduct(authAndProduct.auth.uid, cartProductId);
+      Cart.removeProduct(auth.uid, cartProductId);
     };
 
   });

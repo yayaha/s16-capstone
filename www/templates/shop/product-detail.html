@@ -10,14 +10,14 @@
     </div>
     <div class="item item-text-wrap">
       <h2 style="font-family: 'Arial Black'">{{ productCtrl.product.name }}</h2>
-      <div style="color: #8f8f8f">Item SKU: {{ productCtrl.product.sku }}</div>
-      <br>
-      <div class="row">
-        <div class="col col-60">
-          <div style="font-size: 18px; color: #ef473a">
+      <p style="color: #8f8f8f">Item SKU: {{ productCtrl.product.sku }} <br>
+        Location: {{productCtrl.product.location}} <br>
+        Condition: {{ productCtrl.product.condition }}</p>
+      <div class="row" style="padding-left: 0px">
+        <div class="col col-60" style="padding-left: 0; position: relative;">
+          <span style="font-size: 18px; color: #ef473a; position: absolute; bottom: 12px">
             <b>{{ productCtrl.product.price | currency : '' : 0 }}</b> miles
-          </div>
-          <div>Condition: {{ productCtrl.product.condition }}</div>
+          </span>
         </div>
         <label class="item-input item-select col col-40">
           <span class="input-label">Qty: </span>
