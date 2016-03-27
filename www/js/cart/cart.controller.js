@@ -6,10 +6,6 @@ angular.module('emiratesApp')
   .controller('CartCtrl', function(auth, Cart, Auth) {
     var cartCtrl = this;
 
-    if (!auth) {
-      return;
-    }
-
     Auth.auth.$onAuth(function(authData) {
       if (authData) {
         Cart.cart(authData.uid).$loaded().then(function(data) {
@@ -19,6 +15,10 @@ angular.module('emiratesApp')
         cartCtrl.cart = [];
       }
     });
+
+    if (!auth) {
+      return;
+    }
 
     cartCtrl.removeProduct = function(cartProductId) {
       Cart.removeProduct(auth.uid, cartProductId);
