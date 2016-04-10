@@ -41,6 +41,8 @@ angular.module('emiratesApp')
 
     return {
 
+      currentCart: {},
+
       cart: getCartByUid,
 
       addProduct: function (uid, departmentId, productId, quantity) {

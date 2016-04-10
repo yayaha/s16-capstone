@@ -1,0 +1,70 @@
+<ion-view view-title="Review Order">
+  <ion-content>
+
+
+    <div class="list">
+      <div class="item item-divider">Your Items</div>
+
+      <div class="item item-thumbnail-left item-text-wrap" ng-repeat="product in cartCtrl.cart">
+
+        <img ng-src="{{product.picture}}">
+        <div class="row">
+
+          <div class="col col-60">
+            <h4>{{ product.name }}</h4>
+            <p style="font-size: 10px">Price: {{ product.price | currency : '' : 0 }} miles <br>
+              qty: {{product.quantity}}</p>
+          </div>
+          <div class="col col-40">
+            <h4>{{product.price * product.quantity | currency:'':0}} miles</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="item item-divider">Ship To</div>
+      <div style="padding-left: 16px; padding-top: 10px;">
+        <span>{{cartCtrl.shippingInfo.firstname}} {{cartCtrl.shippingInfo.lastname}}<br></span>
+        <span>{{cartCtrl.shippingInfo.addr.l1}}</span> <br>
+        <span ng-show="cartCtrl.shippingInfo.addr.l2">{{cartCtrl.shippingInfo.addr.l2}}<br></span>
+        <span>{{cartCtrl.shippingInfo.addr.city}}, {{cartCtrl.shippingInfo.addr.state}} &nbsp; {{cartCtrl.shippingInfo.addr.zipcode}} <br></span>
+        <span>{{cartCtrl.shippingInfo.addr.country}}<br></span>
+        <span>({{cartCtrl.shippingInfo.number | limitTo: 3}}) {{cartCtrl.shippingInfo.number | limitTo: -6}}<br></span>
+      </div>
+    </div>
+
+    <div class="item item-divider">Order Summary</div>
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Items:</div>
+      <div class="col summary-col order-summary-right">{{cartCtrl.rawPrice() | currency: "" : 0}}</div>
+    </div>
+    <!--TODO: Shipping and handling fee-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Shipping:</div>
+      <div class="col summary-col order-summary-right">{{cartCtrl.shippingFee() | currency:"":0}}</div>
+    </div>
+    <!--TODO: Total before tax-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Total before tax:</div>
+      <div class="col summary-col order-summary-right">{{cartCtrl.rawPrice() | currency: "" : 0}}</div>
+    </div>
+    <!--TODO: Estimated tax-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Tax ({{cartCtrl.taxRate | percentage : 2}}):</div>
+      <div class="col summary-col order-summary-right">{{cartCtrl.tax() | currency: "" : 0}}</div>
+    </div>
+
+    <div class="row summary-row-total">
+      <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
+      <div class="col summary-col order-summary-right">
+        <strong>{{cartCtrl.rawPrice() + cartCtrl.shippingFee() + cartCtrl.tax() | currency : "" : 0}}</strong>
+      </div>
+    </div>
+
+
+    <div>
+      <button class="button button-full button-assertive" ng-click="cartCtrl.placeOrder()">Place order</button>
+    </div>
+
+  </ion-content>
+
+</ion-view>

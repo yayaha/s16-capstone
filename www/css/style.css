@@ -9,6 +9,34 @@
   font-size: 16px;
 }
 
+.order-summary-left {
+  text-align: left;
+}
+
+.order-summary-right {
+  text-align: right;
+}
+
+.summary-row {
+  margin-top: 0;
+  padding-left: 16px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.summary-col {
+  padding-left: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.summary-row-total {
+  margin-top: 0;
+  padding-left: 16px;
+  padding-top: 25px;
+  padding-bottom: 5px;
+  font-size: 18px;
+}
 
 /* Hero
 ==================================*/

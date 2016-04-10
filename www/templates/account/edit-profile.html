@@ -4,11 +4,22 @@
       <div class="item item-avatar">
         <img ng-src="{{ profileCtrl.profile.gravatar }}">
         <h2>{{ profileCtrl.profile.displayName }}</h2>
+        <p> {{profileCtrl.profile.firstname }} {{profileCtrl.profile.lastname}}</p>
       </div>
 
       <label class="item item-input">
         <span class="input-label">Display Name: </span>
         <input type="text" ng-model="profileCtrl.profile.displayName" required>
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">First Name: </span>
+        <input type="text" ng-model="profileCtrl.profile.firstname" required>
+      </label>
+
+      <label class="item item-input">
+        <span class="input-label">Last Name: </span>
+        <input type="text" ng-model="profileCtrl.profile.lastname" required>
       </label>
 
       <label class="item item-input">
