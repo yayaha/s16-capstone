@@ -26,7 +26,7 @@ angular
     authCtrl.register = function () {
       Auth.register(authCtrl.user).then(function () {
         authCtrl.showAlert('Register successful!', 'Your account was created!');
-        this.login('tab.edit-profile');
+        authCtrl.login('tab.edit-profile');
       }, function (error) {
         authCtrl.showAlert('Error', error.message);
       })

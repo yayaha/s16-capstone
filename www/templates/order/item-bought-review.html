@@ -1,0 +1,80 @@
+<ion-view title="Review your order">
+  <ion-content>
+
+    <div class="list">
+      <div class="item item-divider">Your Items</div>
+      <div class="item item-thumbnail-left item-text-wrap"
+           ng-repeat="product in boughtOrderReviewCtrl.currentOrder.cart">
+
+        <!--ui-sref="tab.product-detail({departmentId: product.departmentId, productId: product.productId})"-->
+        <img ng-src="{{product.picture}}">
+        <div class="row">
+
+          <div class="col col-60">
+            <h4>{{ product.name }}</h4>
+            <p style="font-size: 10px">Price: {{ product.price | currency : '' : 0 }} miles <br>
+              qty: {{product.quantity}}</p>
+          </div>
+          <div class="col col-40">
+            <h4>{{product.price * product.quantity | currency:'':0}} miles</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="item item-divider">Ship To</div>
+      <div style="padding-left: 16px; padding-top: 10px;">
+        <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.firstname}} {{boughtOrderReviewCtrl.currentOrder.shippingInfo.lastname}}<br></span>
+        <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.l1}}</span> <br>
+        <span ng-show="boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.l2">{{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.l2}}<br></span>
+        <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.city}}, {{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.state}} &nbsp; {{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.zipcode}} <br></span>
+        <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.country}}<br></span>
+        <span>({{boughtOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: 3}}) {{boughtOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: -6}}<br></span>
+      </div>
+    </div>
+
+    <div class="item item-divider">Order Summary</div>
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Order date:</div>
+      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.currentOrder.orderTimestamp |
+        date:'medium'}}
+      </div>
+    </div>
+
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Items:</div>
+      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() | currency: "" : 0}}</div>
+    </div>
+    <!--TODO: Shipping and handling fee-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Shipping:</div>
+      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.shippingFee() | currency:"":0}}</div>
+    </div>
+    <!--TODO: Total before tax-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Total before tax:</div>
+      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() +
+        boughtOrderReviewCtrl.shippingFee() | currency: "" :
+        0}}
+      </div>
+    </div>
+    <!--TODO: Estimated tax-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Tax ({{boughtOrderReviewCtrl.taxRate | percentage : 2}}):</div>
+      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.tax() | currency: "" : 0}}</div>
+    </div>
+
+    <div class="row summary-row-total">
+      <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
+      <div class="col summary-col order-summary-right">
+        <strong>{{boughtOrderReviewCtrl.totalPrice() | currency : "" : 0}}</strong>
+      </div>
+    </div>
+
+    </div>
+    <div>
+      <button class="button button-block button-assertive">Confirm Order Receipt</button>
+      <button class="button button-block button-outline button-assertive">Cancel Order</button>
+    </div>
+
+  </ion-content>
+</ion-view>

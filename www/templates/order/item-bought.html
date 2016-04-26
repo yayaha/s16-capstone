@@ -1,0 +1,20 @@
+<ion-view title="Items Bought">
+  <ion-content>
+    <div class="list">
+      <a class="item item-icon-right" ng-repeat="order in boughtOrderCtrl.orders | orderBy: 'status': true"
+         ui-sref="tab.bought-order-review({orderKey: order.$id})">
+        <div class="row">
+          <div class="col">
+            <h2>{{order.orderTimestamp | date:'yyyy-MM-dd'}}</h2>
+            <p>Order #: {{order.orderNumber}}</p>
+          </div>
+          <div class="col item-note">
+            <span class="item-note">{{order.status}}</span>
+          </div>
+        </div>
+
+        <i class="icon ion-ios-arrow-right"></i>
+      </a>
+    </div>
+  </ion-content>
+</ion-view>

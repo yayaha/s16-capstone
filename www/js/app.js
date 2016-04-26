@@ -167,6 +167,7 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
 
       .state('tab.account-dash', {
         url: '/account',
+        cache: false,
         views: {
           'tab-account': {
             templateUrl: 'templates/account/account.html',
@@ -197,14 +198,11 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         },
         resolve: {
           auth: function($state, Auth) {
-            console.log('auth');
             return Auth.auth.$requireAuth().catch(function(error){
               $state.go('tab.login');
-              console.log(error);
             });
           },
           profile: function(Auth, Profile) {
-            console.log('profile');
             return Auth.auth.$requireAuth().then(function(auth) {
               return Profile.getProfile(auth.uid).$loaded();
             });
@@ -229,7 +227,53 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
             })
           }
         }
+      })
+
+      .state('tab.bought-order', {
+        url: '/boughtOrder',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/order/item-bought.html',
+            controller: 'BoughtOrderCtrl as boughtOrderCtrl'
+          }
+        },
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          orders: function(Auth, Order) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return Order.getBuyerOrders(auth.uid).$loaded();
+            });
+          }
+        }
+      })
+      .state('tab.bought-order-review', {
+        url: '/boughtOrder/:orderKey',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/order/item-bought-review.html',
+            controller: 'BoughtOrderReviewCtrl as boughtOrderReviewCtrl'
+          }
+        },
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          currentOrder: function(Auth, Order, $stateParams) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return Order.getBuyerOrders(auth.uid).$loaded().then(function(data) {
+                return data.$getRecord($stateParams.orderKey);
+              });
+            });
+          }
+        }
       });
+
     $urlRouterProvider.otherwise('/tab/departments');
   })
 
@@ -240,4 +284,10 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
   }])
 
   .constant('FirebaseUrl', 'https://cmu-emirates.firebaseio.com/')
-  .constant('TaxRate', 0.05);
+  .constant('TaxRate', 0.05)
+  .constant('OrderStatusEnum', {
+    PENDING: 'Pending',
+    SHIPPED: 'Shipped',
+    DELIVERED: 'Delivered',
+    COMPLETE: 'Complete'
+  });

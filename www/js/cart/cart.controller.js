@@ -3,7 +3,7 @@
  */
 
 angular.module('emiratesApp')
-  .controller('CartCtrl', function ($state, $ionicPopup, $ionicHistory, auth, Cart, Auth, Profile, TaxRate) {
+  .controller('CartCtrl', function (FirebaseUrl, $state, $ionicPopup, $ionicHistory, $firebaseObject, auth, Cart, Auth, Profile, TaxRate, Order) {
     var cartCtrl = this;
 
     cartCtrl.taxRate = TaxRate;
@@ -40,31 +40,50 @@ angular.module('emiratesApp')
       Cart.removeProduct(auth.uid);
     };
 
-    cartCtrl.rawPrice = function() {
+    cartCtrl.rawPrice = function () {
       var total = 0;
-      angular.forEach(cartCtrl.cart, function(value, key) {
+      angular.forEach(cartCtrl.cart, function (value, key) {
         total += value.price * value.quantity;
       });
       return total;
     };
 
-    cartCtrl.tax = function() {
+    cartCtrl.tax = function () {
       return cartCtrl.rawPrice() * TaxRate;
     };
 
     // TODO shipping fee
-    cartCtrl.shippingFee = function() {
+    cartCtrl.shippingFee = function () {
       return 1000;
     };
 
-    cartCtrl.placeOrder = function() {
+    cartCtrl.totalPrice = function () {
+      return cartCtrl.rawPrice() + cartCtrl.shippingFee() + cartCtrl.tax();
+    };
+
+    cartCtrl.placeOrder = function () {
+      // Check account balance first.
+      if (cartCtrl.profile.balance.available < cartCtrl.totalPrice()) {
+        $ionicPopup.alert({
+          title: 'Insufficient balance',
+          template: 'Your account doesn\'t have enough balance for this order! Placing order failed.',
+          okText: 'OK',
+          okType: 'button-assertive'
+        });
+        return;
+      }
+      Order.placeOrder(auth.uid, cartCtrl.cart, cartCtrl.shippingInfo);
+      cartCtrl.profile.balance.available -= cartCtrl.totalPrice();
+      cartCtrl.profile.$save();
       $ionicPopup.alert({
         title: 'Successful',
         template: 'Your order has been placed!',
         okText: 'Got it',
         okType: 'button-assertive'
-      }).then(function() {
-        $state.go('tab.departments').then(function() {
+      }).then(function () {
+        var tmpCart = $firebaseObject(new Firebase(FirebaseUrl + 'cart/' + auth.uid));
+        tmpCart.$remove();
+        $state.go('tab.departments').then(function () {
           $ionicHistory.clearHistory();
         });
 

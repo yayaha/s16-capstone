@@ -3,9 +3,11 @@
  */
 
 angular.module('emiratesApp')
-  .controller('AccountDashCtrl', function($state, Auth, auth, profile){
+  .controller('AccountDashCtrl', function($scope, $state, Auth, auth, profile){
     var acctCtrl = this;
-    acctCtrl.profile = profile;
+
+      acctCtrl.profile = profile;
+
 
     acctCtrl.logout = function() {
       Auth.logout();

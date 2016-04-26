@@ -45,7 +45,7 @@
     <!--TODO: Total before tax-->
     <div class="row summary-row">
       <div class="col summary-col order-summary-left">Total before tax:</div>
-      <div class="col summary-col order-summary-right">{{cartCtrl.rawPrice() | currency: "" : 0}}</div>
+      <div class="col summary-col order-summary-right">{{cartCtrl.rawPrice() + cartCtrl.shippingFee() | currency: "" : 0}}</div>
     </div>
     <!--TODO: Estimated tax-->
     <div class="row summary-row">
@@ -56,7 +56,7 @@
     <div class="row summary-row-total">
       <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
       <div class="col summary-col order-summary-right">
-        <strong>{{cartCtrl.rawPrice() + cartCtrl.shippingFee() + cartCtrl.tax() | currency : "" : 0}}</strong>
+        <strong>{{cartCtrl.totalPrice() | currency : "" : 0}}</strong>
       </div>
     </div>
 

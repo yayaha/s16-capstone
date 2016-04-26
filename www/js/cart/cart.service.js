@@ -27,7 +27,8 @@ angular.module('emiratesApp')
                 'productId': productId,
                 'quantity': quantity,
                 'name': product.name,
-                'price': product.price
+                'price': product.price,
+                'publisher': product.publisher
               };
               if (product.pictures) {
                 data.picture = product.pictures[0];
@@ -41,7 +42,6 @@ angular.module('emiratesApp')
 
     return {
 
-      currentCart: {},
 
       cart: getCartByUid,
 
