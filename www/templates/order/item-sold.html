@@ -1,8 +1,8 @@
-<ion-view title="Items Bought">
+<ion-view title="Items Sold">
   <ion-content>
     <div class="list">
-      <a class="item item-icon-right" ng-repeat="order in boughtOrderCtrl.orders | orderBy: 'status': true"
-         ui-sref="tab.bought-order-review({orderKey: order.$id})">
+      <a class="item item-icon-right" ng-repeat="order in soldOrderCtrl.orders | orderBy: 'status': true"
+         ui-sref="tab.sold-order-review({orderKey: order.$id})">
         <div class="row">
           <div class="col col-66">
             <h3>{{order.displayName}}</h3>

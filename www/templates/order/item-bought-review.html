@@ -1,8 +1,43 @@
-<ion-view title="Review your order">
+<ion-view title="Review your orders">
   <ion-content>
 
     <div class="list">
-      <div class="item item-divider">Your Items</div>
+
+      <div class="item item-divider">Order Summary</div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order status:</div>
+        <div class="col summary-col order-summary-right" ng-if="boughtOrderReviewCtrl.currentOrder.status!='Shipped'">
+          {{boughtOrderReviewCtrl.currentOrder.status}}
+        </div>
+        <div class="col summary-col order-summary-right" ng-if="boughtOrderReviewCtrl.currentOrder.status=='Shipped'">
+          Shipped on {{boughtOrderReviewCtrl.currentOrder.shippingTimestamp | date:'mediumDate'}}
+        </div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order date:</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.currentOrder.orderTimestamp |
+          date:'mediumDate'}}
+        </div>
+      </div>
+      <div class="row summary-row"  ng-if="boughtOrderReviewCtrl.currentOrder.shippingTimestamp">
+        <div class="col summary-col order-summary-left">Tracking number: </div>
+        <div class="col summary-col order-summary-right">
+          {{boughtOrderReviewCtrl.currentOrder.shippingCarrier}} - {{boughtOrderReviewCtrl.currentOrder.trackingNumber}}
+        </div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order number:</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.currentOrder.orderNumber}}</div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order total:</div>
+        <div class="col summary-col order-summary-right">
+          {{boughtOrderReviewCtrl.totalPrice() | currency : "" : 0}} miles
+        </div>
+      </div>
+
+
+      <div class="item item-divider">Order Items</div>
       <div class="item item-thumbnail-left item-text-wrap"
            ng-repeat="product in boughtOrderReviewCtrl.currentOrder.cart">
 
@@ -21,7 +56,7 @@
         </div>
       </div>
 
-      <div class="item item-divider">Ship To</div>
+      <div class="item item-divider">Shipping Address</div>
       <div style="padding-left: 16px; padding-top: 10px;">
         <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.firstname}} {{boughtOrderReviewCtrl.currentOrder.shippingInfo.lastname}}<br></span>
         <span>{{boughtOrderReviewCtrl.currentOrder.shippingInfo.addr.l1}}</span> <br>
@@ -32,13 +67,8 @@
       </div>
     </div>
 
-    <div class="item item-divider">Order Summary</div>
-    <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Order date:</div>
-      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.currentOrder.orderTimestamp |
-        date:'medium'}}
-      </div>
-    </div>
+    <div class="item item-divider">Charge Details</div>
+
 
     <div class="row summary-row">
       <div class="col summary-col order-summary-left">Items:</div>
@@ -53,8 +83,7 @@
     <div class="row summary-row">
       <div class="col summary-col order-summary-left">Total before tax:</div>
       <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() +
-        boughtOrderReviewCtrl.shippingFee() | currency: "" :
-        0}}
+        boughtOrderReviewCtrl.shippingFee() | currency: "" :0}}
       </div>
     </div>
     <!--TODO: Estimated tax-->
@@ -70,10 +99,11 @@
       </div>
     </div>
 
-    </div>
     <div>
-      <button class="button button-block button-assertive">Confirm Order Receipt</button>
-      <button class="button button-block button-outline button-assertive">Cancel Order</button>
+      <button class="button button-block button-assertive" ng-click="boughtOrderReviewCtrl.confirmReceipt()"
+              ng-if="boughtOrderReviewCtrl.currentOrder.status != 'Complete'">
+        Confirm Order Receipt</button>
+      <button class="button button-block button-outline button-assertive" ng-click="boughtOrderReviewCtrl.trackShipment()">Track Shipment</button>
     </div>
 
   </ion-content>

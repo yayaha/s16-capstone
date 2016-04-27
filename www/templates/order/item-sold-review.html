@@ -1,0 +1,102 @@
+<ion-view title="Review your orders">
+  <ion-content>
+
+    <div class="list">
+
+      <div class="item item-divider">Order Summary</div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order status:</div>
+        <div class="col summary-col order-summary-right" ng-if="soldOrderReviewCtrl.currentOrder.status!='Shipped'">
+          {{soldOrderReviewCtrl.currentOrder.status}}
+        </div>
+        <div class="col summary-col order-summary-right" ng-if="soldOrderReviewCtrl.currentOrder.status=='Shipped'">
+          Shipped on {{soldOrderReviewCtrl.currentOrder.shippingTimestamp | date:'mediumDate'}}
+        </div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order date:</div>
+        <div class="col summary-col order-summary-right">{{soldOrderReviewCtrl.currentOrder.orderTimestamp |
+          date:'mediumDate'}}
+        </div>
+      </div>
+      <div class="row summary-row" ng-if="soldOrderReviewCtrl.currentOrder.shippingTimestamp">
+        <div class="col summary-col order-summary-left">Tracking number:</div>
+        <div class="col summary-col order-summary-right">
+          {{soldOrderReviewCtrl.currentOrder.shippingCarrier}} - {{soldOrderReviewCtrl.currentOrder.trackingNumber}}
+        </div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order number:</div>
+        <div class="col summary-col order-summary-right">{{soldOrderReviewCtrl.currentOrder.orderNumber}}</div>
+      </div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Order total:</div>
+        <div class="col summary-col order-summary-right">
+          {{soldOrderReviewCtrl.rawPrice() + soldOrderReviewCtrl.shippingFee() | currency : "" : 0}} miles
+        </div>
+      </div>
+
+
+      <div class="item item-divider">Order Items</div>
+      <div class="item item-thumbnail-left item-text-wrap"
+           ng-repeat="product in soldOrderReviewCtrl.currentOrder.cart">
+
+        <!--ui-sref="tab.product-detail({departmentId: product.departmentId, productId: product.productId})"-->
+        <img ng-src="{{product.picture}}">
+        <div class="row">
+
+          <div class="col col-60">
+            <h4>{{ product.name }}</h4>
+            <p style="font-size: 10px">Price: {{ product.price | currency : '' : 0 }} miles <br>
+              qty: {{product.quantity}}</p>
+          </div>
+          <div class="col col-40">
+            <h4>{{product.price * product.quantity | currency:'':0}} miles</h4>
+          </div>
+        </div>
+      </div>
+
+      <div class="item item-divider">Shipping Address</div>
+      <div style="padding-left: 16px; padding-top: 10px;">
+        <span>{{soldOrderReviewCtrl.currentOrder.shippingInfo.firstname}} {{soldOrderReviewCtrl.currentOrder.shippingInfo.lastname}}<br></span>
+        <span>{{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.l1}}</span> <br>
+        <span ng-show="soldOrderReviewCtrl.currentOrder.shippingInfo.addr.l2">{{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.l2}}<br></span>
+        <span>{{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.city}}, {{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.state}} &nbsp; {{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.zipcode}} <br></span>
+        <span>{{soldOrderReviewCtrl.currentOrder.shippingInfo.addr.country}}<br></span>
+        <span>({{soldOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: 3}}) {{soldOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: -6}}<br></span>
+      </div>
+    </div>
+
+    <div class="item item-divider">Sales Details</div>
+
+
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Items:</div>
+      <div class="col summary-col order-summary-right">{{soldOrderReviewCtrl.rawPrice() | currency: "" : 0}}</div>
+    </div>
+    <!--TODO: Shipping and handling fee-->
+    <div class="row summary-row">
+      <div class="col summary-col order-summary-left">Shipping:</div>
+      <div class="col summary-col order-summary-right">{{soldOrderReviewCtrl.shippingFee() | currency:"":0}}</div>
+    </div>
+
+    <div class="row summary-row-total">
+      <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
+      <div class="col summary-col order-summary-right">
+        <strong>{{soldOrderReviewCtrl.rawPrice() + soldOrderReviewCtrl.shippingFee() | currency : "" : 0}}</strong>
+      </div>
+    </div>
+
+    <div>
+      <button class="button button-block button-assertive" ng-click="soldOrderReviewCtrl.ship()"
+              ng-if="!soldOrderReviewCtrl.currentOrder.shippingTimestamp">
+        Enter Shipment Information
+      </button>
+      <button class="button button-block button-outline button-assertive" ng-click="soldOrderReviewCtrl.cancelOrder()"
+              ng-if="!soldOrderReviewCtrl.currentOrder.shippingTimestamp">
+        Cancel Order
+      </button>
+    </div>
+
+  </ion-content>
+</ion-view>

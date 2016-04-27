@@ -272,7 +272,54 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
             });
           }
         }
-      });
+      })
+
+      .state('tab.sold-order', {
+        url: '/soldOrder',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/order/item-sold.html',
+            controller: 'SoldOrderCtrl as soldOrderCtrl'
+          }
+        },
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          orders: function(Auth, Order) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return Order.getSellerOrders(auth.uid).$loaded();
+            });
+          }
+        }
+      })
+      .state('tab.sold-order-review', {
+        url: '/soldOrder/:orderKey',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/order/item-sold-review.html',
+            controller: 'SoldOrderReviewCtrl as soldOrderReviewCtrl'
+          }
+        },
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          currentOrder: function(Auth, Order, $stateParams) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return Order.getSellerOrders(auth.uid).$loaded().then(function(data) {
+                return data.$getRecord($stateParams.orderKey);
+              });
+            });
+          }
+        }
+      })
+
+    ;
 
     $urlRouterProvider.otherwise('/tab/departments');
   })

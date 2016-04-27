@@ -4,7 +4,7 @@
 
 
 angular.module('emiratesApp')
-  .factory('Auth', function ($firebaseAuth, FirebaseUrl, $state) {
+  .factory('Auth', function ($firebaseAuth, FirebaseUrl, $state, $ionicHistory) {
     var ref = new Firebase(FirebaseUrl);
     var auth = $firebaseAuth(ref);
 
@@ -30,6 +30,9 @@ angular.module('emiratesApp')
       logout: function() {
         auth.$unauth();
         currentUserData = null;
+        // Clear all data and view history
+        $ionicHistory.clearCache();
+        $ionicHistory.clearHistory();
         $state.go('tab.departments');
       },
 

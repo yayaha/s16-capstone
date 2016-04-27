@@ -3,7 +3,8 @@
  */
 
 angular.module('emiratesApp')
-  .controller('CartCtrl', function (FirebaseUrl, $state, $ionicPopup, $ionicHistory, $firebaseObject, auth, Cart, Auth, Profile, TaxRate, Order) {
+  .controller('CartCtrl', function (FirebaseUrl, $state, $ionicPopup, $ionicHistory, $ionicLoading,
+                                    $firebaseObject, auth, Cart, Auth, Profile, TaxRate, Order) {
     var cartCtrl = this;
 
     cartCtrl.taxRate = TaxRate;
@@ -15,11 +16,15 @@ angular.module('emiratesApp')
         });
         Profile.getProfile(authData.uid).$loaded().then(function (data) {
           cartCtrl.profile = data;
-          cartCtrl.shippingInfo = {};
-          cartCtrl.shippingInfo.firstname = data.firstname;
-          cartCtrl.shippingInfo.lastname = data.lastname;
-          cartCtrl.shippingInfo.addr = data.addr;
-          cartCtrl.shippingInfo.number = data.number;
+          if (data.shippingInfo) {
+            cartCtrl.shippingInfo = data.shippingInfo;
+          } else {
+            cartCtrl.shippingInfo = {};
+            cartCtrl.shippingInfo.firstname = data.firstname;
+            cartCtrl.shippingInfo.lastname = data.lastname;
+            cartCtrl.shippingInfo.addr = data.addr;
+            cartCtrl.shippingInfo.number = data.number;
+          }
         });
       } else {
         cartCtrl.cart = null;
@@ -31,6 +36,17 @@ angular.module('emiratesApp')
     if (!auth) {
       return;
     }
+
+    cartCtrl.reviewOrder = function () {
+      cartCtrl.profile.shippingInfo = cartCtrl.shippingInfo;
+      cartCtrl.profile.$save().then(function () {
+        $ionicLoading.hide();
+        $state.go('tab.review-order')
+      });
+      $ionicLoading.show({
+        template: '<ion-spinner>Loading...</ion-spinner>'
+      });
+    };
 
     cartCtrl.removeProduct = function (cartProductId) {
       Cart.removeProduct(auth.uid, cartProductId);

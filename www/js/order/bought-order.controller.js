@@ -3,12 +3,9 @@
  */
 
 angular.module('emiratesApp')
-  .controller('BoughtOrderCtrl', function(auth, orders) {
+  .controller('BoughtOrderCtrl', function($scope, auth, orders) {
     var boughtOrderCtrl = this;
 
     boughtOrderCtrl.orders = orders;
-
-
-
 
   });
