@@ -1,5 +1,24 @@
 /* Empty. Add your own CSS if you like */
 
+img.image-preview {
+  width: 100%;
+  /*border: 1px solid #b2b2b2;*/
+}
+
+button.button.button-outline.icon.ion-plus::before {
+  text-align: center;
+  line-height: 300%;
+}
+
+/*button.button.button-outline.icon.ion-plus::after {*/
+  /*display: block;*/
+  /*width: 100%;*/
+  /*height: 0;*/
+  /*padding: 0 0 100% 0;*/
+/*}*/
+
+
+
 .item h2 {
   font-size: 20px;
 }

@@ -3,18 +3,15 @@
  */
 
 angular.module('emiratesApp')
-  .factory('Shop', function($firebaseArray, FirebaseUrl) {
+  .factory('Shop', function($firebaseArray, $firebaseObject, FirebaseUrl) {
 
     var departmentsRef = new Firebase(FirebaseUrl + 'departments');
     var productListRef = new Firebase(FirebaseUrl + 'products');
     var departments = $firebaseArray(departmentsRef);
 
-    var products;
-
     return {
       getProductList: function(departmentId) {
-        products = $firebaseArray(productListRef.child(departmentId));
-        return products;
+        return $firebaseArray(productListRef.orderByChild('departmentId').equalTo(departmentId));
       },
 
       getDepartment: function(departmentId) {
@@ -23,16 +20,8 @@ angular.module('emiratesApp')
         });
       },
 
-      getProductWithinDepartment: function(productId) {
-        return products.$loaded().then(function(x) {
-          return x.$getRecord(productId)
-        });
-      },
-
-      getProduct: function(departmentId, productId) {
-        return $firebaseArray(productListRef.child(departmentId)).$loaded().then(function(x){
-          return x.$getRecord(productId);
-        })
+      getProduct: function(productId) {
+        return $firebaseObject(productListRef.child(productId));
       },
 
       all: function() {

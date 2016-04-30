@@ -3,7 +3,7 @@
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
-angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
+angular.module('emiratesApp', ['ionic', 'ngCordova', 'firebase', 'angular-md5'])
 
   .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
@@ -59,21 +59,21 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         },
         resolve: {
           departmentName: function($stateParams, Shop) {
-            console.log('department ' + $stateParams.departmentId);
+            //console.log('department ' + $stateParams.departmentId);
             // If accessed directly (which happens only when debugging), the program must retrieve department list first.
             //return Shop.all().$loaded().then(function(){
             return Shop.getDepartment($stateParams.departmentId).$value;
             //});
           },
           productList: function($stateParams, Shop) {
-            return Shop.getProductList($stateParams.departmentId);
+            return Shop.getProductList($stateParams.departmentId).$loaded();
           }
         }
       })
 
 
       .state('tab.product-detail', {
-        url: '/product/:departmentId/:productId',
+        url: '/product/:productId',
         views: {
           'tab-home': {
             templateUrl: 'templates/shop/product-detail.html',
@@ -82,7 +82,7 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
         },
         resolve: {
           product: function($stateParams, Shop) {
-            return Shop.getProduct($stateParams.departmentId, $stateParams.productId);
+            return Shop.getProduct($stateParams.productId).$loaded();
           }
         }
       })
@@ -315,6 +315,56 @@ angular.module('emiratesApp', ['ionic', 'firebase', 'angular-md5'])
                 return data.$getRecord($stateParams.orderKey);
               });
             });
+          }
+        }
+      })
+
+      .state('tab.product-management', {
+        url: '/productManagement',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/products/products-management.html',
+            controller: 'ProductsManagementCtrl as productsManagementCtrl'
+          }
+        },
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          products: function(Auth, ProductsManagement) {
+            return Auth.auth.$requireAuth().then(function(auth) {
+              return ProductsManagement.getProductsForUser(auth.uid).$loaded();
+            })
+          }
+        }
+      })
+
+      .state('tab.edit-product', {
+        url: '/edit-product',
+        views: {
+          'tab-account': {
+            templateUrl: 'templates/products/products-edit.html',
+            controller: 'ProductsEditCtrl as productsEditCtrl'
+          }
+        },
+        params: {'productId': null},
+        resolve: {
+          auth: function ($state, Auth) {
+            return Auth.auth.$requireAuth().catch(function () {
+              $state.go('tab.login');
+            });
+          },
+          departments: function(Shop) {
+            return Shop.all();
+          },
+          product: function($stateParams, Shop) {
+            if ($stateParams.productId) {
+              return Shop.getProduct($stateParams.productId).$loaded();
+            } else {
+              return null;
+            }
           }
         }
       })

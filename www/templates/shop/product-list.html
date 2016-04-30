@@ -3,14 +3,14 @@
 
     <div class="row cards-5-outer">
       <div class="col col-50 card-5" ng-repeat="product in productListCtrl.productList"
-           ui-sref="tab.product-detail({departmentId: productListCtrl.departmentId, productId: product.$id})">
+           ui-sref="tab.product-detail({productId: product.$id})">
         <div class="list card">
           <div class="item item-image">
             <pre-img ratio="_1_1" helper-class="main-image" ng-hide="product.pictures">
-              <img class="full-image" src="img/default_product.png?t={{$index}}" spinner-on-load>
+              <img class="full-image" ng-src="img/default_product.png" spinner-on-load>
             </pre-img>
             <pre-img ratio="_1_1" helper-class="main-image" ng-show="product.pictures">
-              <img ng-src="{{ product.pictures[0] }}?t={{$index}}" spinner-on-load>
+              <img ng-src="{{ product.pictures[0] }}" spinner-on-load>
             </pre-img>
           </div>
           <div class="item item-body">

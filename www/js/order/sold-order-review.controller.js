@@ -36,7 +36,7 @@ angular.module('emiratesApp')
         scope: $scope,
         template:
           '<select ng-model="soldOrderReviewCtrl.shippingCarrier">' +
-          '<option disabled selected>====Choose carrier====</option>' +
+          '<option disabled selected value="">---Choose carrier---</option>' +
           '<option value="USPS">USPS</option><option value="FedEx">FedEx</option>' +
           '<option value="DHL">DHL</option><option value="UPS">UPS</option></select>' +
           '<input placeholder="Tracking Number" ng-model="soldOrderReviewCtrl.shippingTrackingNumber">',

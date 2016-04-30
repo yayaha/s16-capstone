@@ -1,0 +1,30 @@
+<ion-view title="Your Products">
+  <ion-content>
+
+    <div class="list">
+
+      <div class="item item-divider">Active</div>
+      <a class="item item-icon-right item-thumbnail-left" ng-repeat="product in productsManagementCtrl.activeProducts"
+         ng-click="productsManagementCtrl.editProduct(product.$id)">
+        <img ng-src="{{product.pictures[0]}}" ng-if="product.pictures" spinner-on-load>
+        <img ng-src="img/default_product.png" ng-if="!product.pictures" spinner-on-load>
+        <h3>{{product.name}}</h3>
+        <p>Price: {{product.price | currency:'':0}} miles<br>{{product.inventory}} Left / {{product.sold}} Sold</p>
+        <i class="icon ion-ios-arrow-right"></i>
+      </a>
+
+      <div class="item item-divider">Sold Out</div>
+      <a class="item item-icon-right item-thumbnail-left" ng-repeat="product in productsManagementCtrl.soldoutProducts"
+         ui-sref="tab.product-detail({productId: product.$id})">
+        <img ng-src="{{product.pictures[0]}}" ng-if="product.pictures" spinner-on-load>
+        <img ng-src="img/default_product.png" ng-if="!product.pictures" spinner-on-load>
+        <h3>{{product.name}}</h3>
+        <p>Price: {{product.price | currency:'':0}} miles<br>{{product.inventory}} Left / {{product.sold}} Sold</p>
+        <i class="icon ion-ios-arrow-right"></i>
+      </a>
+    </div>
+
+    <button class="button button-block button-assertive" ng-click="productsManagementCtrl.editProduct()">Add New</button>
+
+  </ion-content>
+</ion-view>
