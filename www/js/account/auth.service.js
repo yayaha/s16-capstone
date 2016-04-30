@@ -8,19 +8,11 @@ angular.module('emiratesApp')
     var ref = new Firebase(FirebaseUrl);
     var auth = $firebaseAuth(ref);
 
-    var currentUserData = null;
-
     return {
       auth: auth,
 
-      login: function (user, nextPage) {
-        return auth.$authWithPassword(user).then(function (auth) {
-          console.log('Login successful!');
-          currentUserData = auth;
-          $state.go(nextPage);
-        }, function (error) {
-          currentUserData = null;
-        });
+      login: function (user) {
+        return auth.$authWithPassword(user)
       },
 
       register: function(user){
@@ -29,13 +21,11 @@ angular.module('emiratesApp')
 
       logout: function() {
         auth.$unauth();
-        currentUserData = null;
         // Clear all data and view history
         $ionicHistory.clearCache();
         $ionicHistory.clearHistory();
         $state.go('tab.departments');
-      },
+      }
 
-      currentUserData: currentUserData
     }
   });

@@ -21,7 +21,9 @@ angular.module('emiratesApp')
     }
 
     profileCtrl.updateProfile = function() {
-      profileCtrl.profile.dob = $filter('date')(profileCtrl.dob, 'yyyy-MM-dd');
+      if (profileCtrl.dob) {
+        profileCtrl.profile.dob = $filter('date')(profileCtrl.dob, 'yyyy-MM-dd');
+      }
       profileCtrl.profile.$save().then(function() {
         $state.go('tab.account-dash');
       });

@@ -4,7 +4,7 @@
 
 angular.module('emiratesApp')
   .controller('ProductsEditCtrl', function (FirebaseUrl, $stateParams, $scope, $ionicActionSheet, $ionicPopup,
-                                            $ionicHistory, departments, product, auth, $cordovaCamera) {
+                                            $ionicHistory, departments, product, auth, $cordovaCamera, Censor) {
 
     var productsEditCtrl = this;
     var editProduct = product ? true : false;
@@ -82,7 +82,40 @@ angular.module('emiratesApp')
       });
     };
 
+    productsEditCtrl.censor = function(text, name) {
+      if (!text) {
+        return false;
+      }
+      var censoredText = Censor.censor(text);
+      if (censoredText) {
+        $ionicPopup.alert({
+          title: 'Warning',
+          subTitle: 'Your product ' + name + ' contains illegal words (highlighted below)! Please correct it to proceed!',
+          template: censoredText,
+          okText: 'OK',
+          okType: 'button-assertive'
+        });
+        return true;
+      } else {
+        return false;
+      }
+    };
+
     productsEditCtrl.save = function () {
+      // Censor
+      var censoredText = productsEditCtrl.censor(productsEditCtrl.product.name, 'name');
+      if (censoredText) {
+        return;
+      }
+      censoredText = productsEditCtrl.censor(productsEditCtrl.product.location, 'location');
+      if (censoredText) {
+        return;
+      }
+      censoredText = productsEditCtrl.censor(productsEditCtrl.product.description, 'description');
+      if (censoredText) {
+        return;
+      }
+
       productsEditCtrl.product.sku = Math.floor((Math.random() * 4897705) + 1000000);
       productsEditCtrl.product.publisher = auth.uid;
       if (editProduct) {

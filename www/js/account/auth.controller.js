@@ -13,11 +13,12 @@ angular
     };
 
     authCtrl.login = function (nextPage) {
-      Auth.login(authCtrl.user, nextPage).then(function () {
+      Auth.login(authCtrl.user).then(function () {
         authCtrl.user = {
           email: '',
           password: ''
-        }
+        };
+        $state.go(nextPage);
       }, function (error) {
         authCtrl.showAlert('Error', error.message);
       })

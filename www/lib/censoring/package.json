@@ -1,0 +1,78 @@
+{
+  "_args": [
+    [
+      "censoring",
+      "/Users/weiluo/Desktop/emirates-app/emirates"
+    ]
+  ],
+  "_from": "censoring@latest",
+  "_id": "censoring@0.0.3",
+  "_inCache": true,
+  "_installable": true,
+  "_location": "/censoring",
+  "_npmUser": {
+    "email": "r.w.overdijk@gmail.com",
+    "name": "rwoverdijk"
+  },
+  "_npmVersion": "1.4.16",
+  "_phantomChildren": {},
+  "_requested": {
+    "name": "censoring",
+    "raw": "censoring",
+    "rawSpec": "",
+    "scope": null,
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/censoring/-/censoring-0.0.3.tgz",
+  "_shasum": "659a8a6d48156c64a3f851d09caf6a759ad1a74b",
+  "_shrinkwrap": null,
+  "_spec": "censoring",
+  "_where": "/Users/weiluo/Desktop/emirates-app/emirates",
+  "author": {
+    "name": "RWOverdijk"
+  },
+  "bugs": {
+    "url": "https://github.com/SpoonX/Censoring/issues"
+  },
+  "dependencies": {},
+  "description": "Censor or highlight words and other patterns intelligently.",
+  "devDependencies": {},
+  "directories": {},
+  "dist": {
+    "shasum": "659a8a6d48156c64a3f851d09caf6a759ad1a74b",
+    "tarball": "https://registry.npmjs.org/censoring/-/censoring-0.0.3.tgz"
+  },
+  "gitHead": "f668a8cc39edeb323b62abe361ca65afe8afd26c",
+  "homepage": "https://github.com/SpoonX/Censoring",
+  "keywords": [
+    "javascript",
+    "node",
+    "censor",
+    "highlight",
+    "match",
+    "regex",
+    "string",
+    "manipulation"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "maintainers": [
+    {
+      "email": "r.w.overdijk@gmail.com",
+      "name": "rwoverdijk"
+    }
+  ],
+  "name": "censoring",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SpoonX/Censoring.git"
+  },
+  "scripts": {},
+  "version": "0.0.3"
+}
