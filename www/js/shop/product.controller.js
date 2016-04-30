@@ -25,7 +25,7 @@ angular.module('emiratesApp')
 
     productCtrl.addToCart = function() {
       return Auth.auth.$requireAuth().then(function(auth) {
-        Cart.addProduct(auth.uid, $stateParams.departmentId, $stateParams.productId, productCtrl.quantity);
+        Cart.addProduct(auth.uid, $stateParams.productId, productCtrl.quantity);
         $ionicPopup.alert({
           template: 'Product added to your cart!',
           okType: 'button-assertive'
@@ -41,7 +41,7 @@ angular.module('emiratesApp')
 
     productCtrl.buyItNow = function() {
       return Auth.auth.$requireAuth().then(function(auth) {
-        Cart.addProduct(auth.uid, $stateParams.departmentId, $stateParams.productId, productCtrl.quantity);
+        Cart.addProduct(auth.uid, $stateParams.productId, productCtrl.quantity);
         $ionicPopup.alert({
           template: 'Product added to your cart!',
           okType: 'button-assertive'

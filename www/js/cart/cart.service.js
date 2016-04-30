@@ -13,17 +13,16 @@ angular.module('emiratesApp')
     };
 
 
-    var addProductToCartArray = function (uid, cartArr, departmentId, productId, quantity) {
-      var existingEntry = cartArr.$getRecord(departmentId + '|' + productId);
+    var addProductToCartArray = function (uid, cartArr, productId, quantity) {
+      var existingEntry = cartArr.$getRecord(productId);
           // If product already exists in cart.
           if (existingEntry != null) {
             existingEntry.quantity += quantity;
             cartArr.$save(existingEntry);
           } else {
-            Shop.getProduct(departmentId, productId).then(function (product) {
+            Shop.getProduct(productId).$loaded().then(function (product) {
 
               var data = {
-                'departmentId': departmentId,
                 'productId': productId,
                 'quantity': quantity,
                 'name': product.name,
@@ -35,7 +34,7 @@ angular.module('emiratesApp')
               } else {
                 data.picture = 'img/default_product.png';
               }
-              cartRef.child(uid).child(departmentId + '|' + productId).set(data);
+              cartRef.child(uid).child(productId).set(data);
             });
           }
     };

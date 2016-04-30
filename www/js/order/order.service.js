@@ -8,7 +8,7 @@ angular.module('emiratesApp')
     var fbRef = new Firebase(FirebaseUrl);
 
     var deductInventory = function(item) {
-      $firebaseObject(fbRef.child('products/' + item.departmentId + '/' + item.productId)).$loaded().then(function(data) {
+      $firebaseObject(fbRef.child('products/' + item.productId)).$loaded().then(function(data) {
         data.inventory -= item.quantity;
         data.$save();
       });
