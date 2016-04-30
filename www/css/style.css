@@ -158,3 +158,94 @@ span.item-note.ng-binding {
   transition: opacity 2.5s cubic-bezier(0.55, 0, 0.1, 1);
   opacity: 1;
   filter: alpha(opacity=100); }
+
+
+/* Homepage */
+.list.card.departments {
+  margin: 0;
+}
+a.department {
+  font-size: 1.9em;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  height: 23vw;
+  line-height: calc(23vw - 10px - 1em);
+}
+a.department:nth-of-type(1) {
+  background-image: url("../img/health.png");
+  color: #191A25;
+}
+a.department:nth-of-type(2) {
+  background-image: url("../img/dep1.jpg");
+  color: #883031;
+}
+a.department:nth-of-type(3) {
+  background-image: url("../img/dep2.jpg");
+  color: #524040;
+}
+a.department:nth-of-type(4) {
+  background-image: url("../img/dep3.jpg");
+  color: #FFFFFF;
+}
+a.department:nth-of-type(5) {
+  background-image: url("../img/dep4.jpg");
+  color: #524040;
+}
+a.department:nth-of-type(6) {
+  background-image: url("../img/dep5.jpg");
+  color: #846316;
+}
+a.department:nth-of-type(7) {
+  background-image: url("../img/appliances.png");
+  color: #606060;
+}
+
+
+
+/* Cart */
+.default-msg {
+  margin-top: 100px;
+  text-align: center;
+  color: #535353;
+}
+
+
+/* Account */
+/* icons */
+.icons8 {
+  width: 25px;
+  background-size: 25px;
+  background-repeat: no-repeat;
+}
+.hero .icons8 {
+  height: 25px;
+  display: inline-block;
+  margin: 10px 10px -6px 0;
+}
+.item .icons8 {
+  background-position-y: 13px;
+}
+.icons8-plane-landing {
+  background-image: url("../img/icons/plane-landing.png");
+}
+.icons8-plane-takeoff {
+  background-image: url("../img/icons/plane-takeoff.png");
+}
+.icons8-details {
+  background-image: url("../img/icons/detail.png");
+}
+.icons8-money {
+  background-image: url("../img/icons/gift.png");
+}
+.icons8-gift {
+  background-image: url("../img/icons/gift.png");
+}
+.icons8-user-manual {
+  background-image: url("../img/icons/user-manual.png");
+}
+.icons8-money {
+  background-image: url("../img/icons/money.png");
+}
+.icons8-setting {
+  background-image: url("../img/icons/setting.png");
+}
