@@ -1,6 +1,9 @@
 <ion-view title="Items Sold">
   <ion-content>
-    <div class="list">
+
+    <div class="default-msg" ng-if="!soldOrderCtrl.orders.length">You haven't sold anything yet.</div>
+
+    <div class="list" ng-if="soldOrderCtrl.orders.length">
       <a class="item item-icon-right" ng-repeat="order in soldOrderCtrl.orders | orderBy: 'status': true"
          ui-sref="tab.sold-order-review({orderKey: order.$id})">
         <div class="row">

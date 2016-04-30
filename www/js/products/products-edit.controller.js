@@ -18,6 +18,19 @@ angular.module('emiratesApp')
     };
 
 
+    productsEditCtrl.showDeleteImageAction = function (index) {
+      $ionicActionSheet.show({
+        titleText: 'Delete product picture',
+        destructiveText: 'Delete',
+        cancelText: 'Cancel',
+        destructiveButtonClicked: function () {
+          productsEditCtrl.product.pictures.splice(index, 1);
+          return true;
+        }
+      })
+    };
+
+
     productsEditCtrl.sourceType = 1;
 
     productsEditCtrl.showCameraAction = function () {
@@ -81,5 +94,20 @@ angular.module('emiratesApp')
       //$ionicLoading.show({
       //  template: '<ion-spinner>Saving...</ion-spinner>'
       //});
+    };
+
+    productsEditCtrl.cancel = function() {
+      $ionicPopup.confirm({
+        title: 'Cancel',
+        template: 'Are you sure you want to cancel editing?',
+        okText: 'Yes',
+        okType: 'button-assertive',
+        cancelText: 'No',
+        cancelType: 'button-assertive button-outline'
+      }).then(function(res) {
+        if (res) {
+          $ionicHistory.goBack();
+        }
+      })
     }
   });

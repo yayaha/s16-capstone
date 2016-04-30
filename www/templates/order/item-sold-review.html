@@ -96,6 +96,10 @@
               ng-if="!soldOrderReviewCtrl.currentOrder.shippingTimestamp">
         Cancel Order
       </button>
+      <button class="button button-block button-assertive" disabled
+              ng-if="soldOrderReviewCtrl.currentOrder.shippingTimestamp">
+        Order Already Shipped.
+      </button>
     </div>
 
   </ion-content>

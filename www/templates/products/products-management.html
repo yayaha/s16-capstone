@@ -1,7 +1,9 @@
 <ion-view title="Your Products">
   <ion-content>
 
-    <div class="list">
+    <div class="default-msg" ng-if="!productsManagementCtrl.products.length">You don't have any product listed now.</div>
+
+    <div class="list" ng-if="productsManagementCtrl.products.length">
 
       <div class="item item-divider">Active</div>
       <a class="item item-icon-right item-thumbnail-left" ng-repeat="product in productsManagementCtrl.activeProducts"
@@ -15,7 +17,7 @@
 
       <div class="item item-divider">Sold Out</div>
       <a class="item item-icon-right item-thumbnail-left" ng-repeat="product in productsManagementCtrl.soldoutProducts"
-         ui-sref="tab.product-detail({productId: product.$id})">
+         ng-click="productsManagementCtrl.editProduct(product.$id)">
         <img ng-src="{{product.pictures[0]}}" ng-if="product.pictures" spinner-on-load>
         <img ng-src="img/default_product.png" ng-if="!product.pictures" spinner-on-load>
         <h3>{{product.name}}</h3>

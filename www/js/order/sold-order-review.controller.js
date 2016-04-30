@@ -91,7 +91,7 @@ angular.module('emiratesApp')
           okText: 'Yes',
           okType: 'button-assertive',
           cancelText: 'No',
-          cancelType: 'button-assertive'
+          cancelType: 'button-assertive button-outline'
         })
       }
     };

@@ -19,17 +19,26 @@
             <b>{{ productCtrl.product.price | currency : '' : 0 }}</b> miles
           </span>
         </div>
-        <label class="item-input item-select col col-40">
+        <label class="item-input item-select col col-40"  ng-if="productCtrl.product.inventory > 0">
           <span class="input-label">Qty: </span>
           <select ng-model="productCtrl.quantity" ng-init="productCtrl.quantity=productCtrl.options[0]"
                   ng-options="i for i in productCtrl.options">
+            <!--<option value="" ng-if="productCtrl.product.inventory == 0">Sold Out</option>-->
           </select>
         </label>
+        <label class="item-input item-select col col-40" ng-if="productCtrl.product.inventory === 0">
+          <span class="input-label">Qty: </span>
+          <select><option selected disabled>Sold Out</option></select>
+        </label>
       </div>
-      <div style="text-align: right">
+
+      <div style="text-align: right" ng-if="productCtrl.product.inventory > 0">
         <button class="button button-outline button-assertive" ng-click="productCtrl.buyItNow()">Buy it now</button>
         &nbsp;
         <button class="button button-assertive" ng-click="productCtrl.addToCart()">Add to cart</button>
+      </div>
+      <div style="text-align: right" ng-if="productCtrl.product.inventory === 0">
+        <button class="button button-assertive" disabled>Sold Out</button>
       </div>
     </div>
 
