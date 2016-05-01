@@ -55,18 +55,25 @@ angular.module('emiratesApp')
         destinationType: navigator.camera.DestinationType.DATA_URL,
         targetWidth: 500,
         targetHeight: 500,
-        sourceType: $scope.sourceType,
+        sourceType: productsEditCtrl.sourceType,
         allowEdit: true
       };
       $cordovaCamera.getPicture(options).then(function (imageData) {
+        if (!productsEditCtrl.product) {
+          productsEditCtrl.product = {};
+        }
         if (productsEditCtrl.product.pictures) {
           productsEditCtrl.product.pictures.push('data:image/jpeg;base64,' + imageData);
         } else {
           productsEditCtrl.product.pictures = ['data:image/jpeg;base64,' + imageData];
         }
-        $ionicSlideBoxDelegate.update();
       }, function (err) {
-        //console.err(err);
+        $ionicPopup.alert({
+          title: 'Error',
+          template: err,
+          okText: 'OK',
+          okType: 'button-assertive'
+        })
       });
     };
 
@@ -101,7 +108,56 @@ angular.module('emiratesApp')
       }
     };
 
+    var validateDataAlert = function(missingField) {
+      $ionicPopup.alert({
+        title: 'Error',
+        template: missingField + ' is required!',
+        okText: 'OK',
+        okType: 'button-assertive'
+      });
+    };
+
+    var validateData = function() {
+      if (!productsEditCtrl.product) {
+        validateDataAlert('Product name');
+        return false;
+      }
+      if (!productsEditCtrl.product.name) {
+        validateDataAlert('Product name');
+        return false;
+      }
+      if (!productsEditCtrl.product.price) {
+        validateDataAlert('Product price');
+        return false;
+      }
+      if (!productsEditCtrl.product.quantity) {
+        validateDataAlert('Product quantity');
+        return false;
+      }
+      if (!productsEditCtrl.product.location) {
+        validateDataAlert('Product location');
+        return false;
+      }
+      if (!productsEditCtrl.product.condition) {
+        validateDataAlert('Product condition');
+        return false;
+      }
+      if (!productsEditCtrl.product.category) {
+        validateDataAlert('Product category');
+        return false;
+      }
+      if (!productsEditCtrl.product.description) {
+        validateDataAlert('Product description');
+        return false;
+      }
+    };
+
     productsEditCtrl.save = function () {
+
+      // Validate data input
+      if (!validateData()) {
+        return;
+      }
       // Censor
       var censoredText = productsEditCtrl.censor(productsEditCtrl.product.name, 'name');
       if (censoredText) {
@@ -115,7 +171,7 @@ angular.module('emiratesApp')
       if (censoredText) {
         return;
       }
-
+      // Generate SKU
       productsEditCtrl.product.sku = Math.floor((Math.random() * 4897705) + 1000000);
       productsEditCtrl.product.publisher = auth.uid;
       if (editProduct) {
