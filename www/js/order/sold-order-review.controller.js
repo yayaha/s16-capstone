@@ -35,11 +35,19 @@ angular.module('emiratesApp')
         title: 'Enter shipment information',
         scope: $scope,
         template:
+          '<div class="list">' +
+          '<label class="item item-input item-select">' +
+          '<div class="input-label">Carrier</div>' +
           '<select ng-model="soldOrderReviewCtrl.shippingCarrier">' +
           '<option disabled selected value="">---Choose carrier---</option>' +
           '<option value="USPS">USPS</option><option value="FedEx">FedEx</option>' +
-          '<option value="DHL">DHL</option><option value="UPS">UPS</option></select>' +
-          '<input placeholder="Tracking Number" ng-model="soldOrderReviewCtrl.shippingTrackingNumber">',
+          '<option value="DHL">DHL</option><option value="UPS">UPS</option>' +
+          '</select>' +
+          '</label>' +
+          '<label class="item item-input">' +
+          '<input placeholder="Tracking Number" ng-model="soldOrderReviewCtrl.shippingTrackingNumber">' +
+          '</label>' +
+          '</div>',
         buttons: [
           {text: 'Cancel'},
           {

@@ -16,7 +16,8 @@ angular.module('emiratesApp')
 
       getDepartment: function(departmentId) {
         return departments.$loaded().then(function(x){
-          return x.$getRecord(departmentId);
+          var obj = x.$getRecord(departmentId);
+          return obj;
         });
       },
 

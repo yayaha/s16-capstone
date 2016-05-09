@@ -66,39 +66,37 @@
         <span>({{boughtOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: 3}}) {{boughtOrderReviewCtrl.currentOrder.shippingInfo.number | limitTo: -6}}<br></span>
       </div>
     </div>
+    <div class="list">
+      <div class="item item-divider">Charge Details</div>
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Items:</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() | currency: "" : 0}}</div>
+      </div>
+      <!--TODO: Shipping and handling fee-->
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Shipping:</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.shippingFee() | currency:"":0}}</div>
+      </div>
+      <!--TODO: Total before tax-->
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Total before service charge:</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() +
+          boughtOrderReviewCtrl.shippingFee() | currency: "" :0}}
+        </div>
+      </div>
+      <!--TODO: Estimated tax-->
+      <div class="row summary-row">
+        <div class="col summary-col order-summary-left">Service charge ({{boughtOrderReviewCtrl.taxRate | percentage : 2}}):</div>
+        <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.tax() | currency: "" : 0}}</div>
+      </div>
 
-    <div class="item item-divider">Charge Details</div>
-
-
-    <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Items:</div>
-      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() | currency: "" : 0}}</div>
-    </div>
-    <!--TODO: Shipping and handling fee-->
-    <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Shipping:</div>
-      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.shippingFee() | currency:"":0}}</div>
-    </div>
-    <!--TODO: Total before tax-->
-    <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Total before tax:</div>
-      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.rawPrice() +
-        boughtOrderReviewCtrl.shippingFee() | currency: "" :0}}
+      <div class="row summary-row-total">
+        <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
+        <div class="col summary-col order-summary-right">
+          <strong>{{boughtOrderReviewCtrl.totalPrice() | currency : "" : 0}}</strong>
+        </div>
       </div>
     </div>
-    <!--TODO: Estimated tax-->
-    <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Tax ({{boughtOrderReviewCtrl.taxRate | percentage : 2}}):</div>
-      <div class="col summary-col order-summary-right">{{boughtOrderReviewCtrl.tax() | currency: "" : 0}}</div>
-    </div>
-
-    <div class="row summary-row-total">
-      <div class="col summary-col order-summary-left"><strong>Total:</strong></div>
-      <div class="col summary-col order-summary-right">
-        <strong>{{boughtOrderReviewCtrl.totalPrice() | currency : "" : 0}}</strong>
-      </div>
-    </div>
-
     <div>
       <button class="button button-block button-assertive" ng-click="boughtOrderReviewCtrl.confirmReceipt()"
               ng-if="boughtOrderReviewCtrl.currentOrder.status != 'Complete'">

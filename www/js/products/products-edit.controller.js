@@ -130,7 +130,7 @@ angular.module('emiratesApp')
         validateDataAlert('Product price');
         return false;
       }
-      if (!productsEditCtrl.product.quantity) {
+      if (!productsEditCtrl.product.inventory) {
         validateDataAlert('Product quantity');
         return false;
       }
@@ -142,7 +142,7 @@ angular.module('emiratesApp')
         validateDataAlert('Product condition');
         return false;
       }
-      if (!productsEditCtrl.product.category) {
+      if (!productsEditCtrl.product.departmentId) {
         validateDataAlert('Product category');
         return false;
       }
@@ -150,6 +150,7 @@ angular.module('emiratesApp')
         validateDataAlert('Product description');
         return false;
       }
+      return true;
     };
 
     productsEditCtrl.save = function () {

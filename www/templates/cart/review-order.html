@@ -44,12 +44,12 @@
     </div>
     <!--TODO: Total before tax-->
     <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Total before tax:</div>
+      <div class="col summary-col order-summary-left">Total before service charge:</div>
       <div class="col summary-col order-summary-right">{{cartCtrl.rawPrice() + cartCtrl.shippingFee() | currency: "" : 0}}</div>
     </div>
     <!--TODO: Estimated tax-->
     <div class="row summary-row">
-      <div class="col summary-col order-summary-left">Tax ({{cartCtrl.taxRate | percentage : 2}}):</div>
+      <div class="col summary-col order-summary-left">Service charge ({{cartCtrl.taxRate | percentage : 2}}):</div>
       <div class="col summary-col order-summary-right">{{cartCtrl.tax() | currency: "" : 0}}</div>
     </div>
 

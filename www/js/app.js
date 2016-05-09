@@ -38,7 +38,7 @@ angular.module('emiratesApp', ['ionic', 'ngCordova', 'firebase', 'angular-md5'])
         url: '/departments',
         resolve: {
           departments: function(Shop) {
-            return Shop.all();
+            return Shop.all().$loaded();
           }
         },
         views: {
@@ -59,13 +59,19 @@ angular.module('emiratesApp', ['ionic', 'ngCordova', 'firebase', 'angular-md5'])
         },
         resolve: {
           departmentName: function($stateParams, Shop) {
-            //console.log('department ' + $stateParams.departmentId);
+            //console.log('department starts' + $stateParams.departmentId);
             // If accessed directly (which happens only when debugging), the program must retrieve department list first.
             //return Shop.all().$loaded().then(function(){
-            return Shop.getDepartment($stateParams.departmentId).$value;
+            //var obj = Shop.getDepartment($stateParams.departmentId).$value;
+            //return obj;
+            return Shop.all().$loaded().then(function(data) {
+              var obj = data.$getRecord($stateParams.departmentId);
+              return obj.$value;
+            });
             //});
           },
           productList: function($stateParams, Shop) {
+            //console.log('department 1 ' + $stateParams.departmentId);
             return Shop.getProductList($stateParams.departmentId).$loaded();
           }
         }

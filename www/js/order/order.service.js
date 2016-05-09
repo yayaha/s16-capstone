@@ -28,7 +28,8 @@ angular.module('emiratesApp')
             totalBySeller[item.publisher] += item.price * item.quantity;
             cartBySeller[item.publisher].push(item);
           } else {
-            totalBySeller[item.publisher] = item.price * item.quantity;
+            // 1000 is shipping fee.
+            totalBySeller[item.publisher] = 1000 + item.price * item.quantity;
             cartBySeller[item.publisher] = [item];
           }
         }
